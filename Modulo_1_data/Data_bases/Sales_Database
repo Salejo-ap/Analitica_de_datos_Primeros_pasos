@@ -1,0 +1,51 @@
+SELECT VERSION() AS 'Version MySQL';
+SELECT DATABASE() AS 'Base de Datos Actual';
+
+-- Verificar las bases de datos actuales--
+SHOW DATABASES;
+CREATE DATABASE IF NOT EXISTS Sales_Database;
+USE Sales_Database;
+-- Creacion de las tablas--
+CREATE TABLE sales_customers (
+    Nombre_del_cliente VARCHAR(100) NOT NULL,
+    Codigo_de_cliente VARCHAR(50) PRIMARY KEY,
+    Tipo_de_cliente VARCHAR(50)
+);
+CREATE TABLE sales_markets (
+    Codigo_de_mercado VARCHAR(50) PRIMARY KEY,
+    Nombre_del_mercado VARCHAR(100),
+    Zona VARCHAR(100)
+);
+CREATE TABLE sales_date (
+    Fecha DATE,
+    Fecha_ci VARCHAR(50),
+    Año INT,
+    Fecha_mm NCHAR(50)
+);
+CREATE TABLE sales_products (
+    Codigo_de_producto VARCHAR(50) PRIMARY KEY,
+    Tipo_de_producto VARCHAR(50)
+);
+CREATE TABLE sales_transactions(
+    Codigo_de_producto VARCHAR(50),
+    Codigo_de_mercado VARCHAR(50),
+    Codigo_de_cliente VARCHAR(50),
+    Fecha_pedido VARCHAR(50),
+    Cantidad_de_ventas VARCHAR(50),
+    Importe_de_las_ventas VARCHAR(50),
+    Importe_ventas_normalizado VARCHAR(50),
+    FOREIGN KEY (Codigo_de_producto) 
+        REFERENCES sales_products(Codigo_de_producto)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (Codigo_de_mercado)
+        REFERENCES sales_markets(Codigo_de_mercado)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (Codigo_de_cliente)
+        REFERENCES sales_customers(Codigo_de_cliente)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+--Insertar los datos--
